@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Orejitas</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            overflow: hidden;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .container {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .text-prompt {
+            font-size: 1.2rem;
+            color: #888;
+            letter-spacing: 2px;
+            animation: pulse 2s infinite;
+            transition: opacity 0.5s ease;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.7; }
+            50% { transform: scale(1.05); opacity: 1; }
+        }
+
+        .surprise-container {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .flower {
+            width: 200px;
+            height: 250px;
+            overflow: visible;
+        }
+
+        .stem {
+            stroke-dasharray: 150;
+            stroke-dashoffset: 150;
+            transition: stroke-dashoffset 1.5s ease-out;
+        }
+
+        .leaf, .petal, .center {
+            transform-box: fill-box;
+            opacity: 0;
+            transform: scale(0);
+        }
+
+        .leaf {
+            transform-origin: bottom center;
+            transition: all 0.8s ease-out 1s;
+        }
+
+        .petal {
+            transform-origin: center;
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .center {
+            transform-origin: center;
+            transition: all 0.5s ease-out 2.5s;
+        }
+
+        .message {
+            margin-top: 1.5rem;
+            font-size: 2.2rem;
+            color: #d81b60;
+            font-weight: 600;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 1s ease-out 3s;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .active .stem { stroke-dashoffset: 0; }
+        .active .leaf { opacity: 1; transform: scale(1); }
+        
+        .active .petal:nth-child(3) { opacity: 1; transform: scale(1); transition-delay: 1.4s; }
+        .active .petal:nth-child(4) { opacity: 1; transform: scale(1); transition-delay: 1.6s; }
+        .active .petal:nth-child(5) { opacity: 1; transform: scale(1); transition-delay: 1.8s; }
+        .active .petal:nth-child(6) { opacity: 1; transform: scale(1); transition-delay: 2.0s; }
+        .active .petal:nth-child(7) { opacity: 1; transform: scale(1); transition-delay: 2.2s; }
+        
+        .active .center { opacity: 1; transform: scale(1); }
+        .active .message { opacity: 1; transform: translateY(0); }
+
+    </style>
+</head>
+<body>
+
+    <div class="container" id="main-container">
+        <div class="text-prompt" id="prompt">Toca la pantalla 💝</div>
+        
+        <div class="surprise-container" id="surprise">
+            <svg class="flower" viewBox="0 0 100 130" xmlns="http://www.w3.org/2000/svg">
+                <path class="stem" d="M50 60 Q 55 90 50 120" stroke="#4ade80" stroke-width="4" fill="none" stroke-linecap="round"/>
+                
+                <path class="leaf leaf-left" d="M50 95 Q 30 90 35 75 Q 45 85 50 95" fill="#4ade80" />
+                <path class="leaf leaf-right" d="M51 105 Q 70 100 65 85 Q 55 95 51 105" fill="#4ade80" />
+                
+                <circle class="petal" cx="50" cy="35" r="14" fill="#fb7185" />
+                <circle class="petal" cx="36" cy="48" r="14" fill="#f43f5e" />
+                <circle class="petal" cx="64" cy="48" r="14" fill="#f43f5e" />
+                <circle class="petal" cx="42" cy="62" r="14" fill="#e11d48" />
+                <circle class="petal" cx="58" cy="62" r="14" fill="#e11d48" />
+                
+                <circle class="center" cx="50" cy="50" r="8" fill="#fbbf24" />
+            </svg>
+            <div class="message">Una flor para ti,<br>Orejitas ✨</div>
+        </div>
+    </div>
+
+    <script>
+        document.body.addEventListener('click', function() {
+            const prompt = document.getElementById('prompt');
+            const surprise = document.getElementById('surprise');
+
+            if (!surprise.classList.contains('active')) {
+                prompt.style.opacity = '0';
+                
+                setTimeout(() => {
+                    prompt.style.display = 'none'; 
+                    surprise.style.display = 'flex'; 
+                    
+                    void surprise.offsetWidth; 
+                    
+                    surprise.classList.add('active');
+                }, 500); 
+            }
+        });
+    </script>
+</body>
+</html>
